@@ -1,1 +1,27 @@
-/* Styles for deadlines.js. Empty for now. */
+/* Styles for deadlines.js: the labels in the Urgency column. */
+
+.deadline-label {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* Deadline has passed: red */
+.deadline-overdue {
+  background: #fdecec;
+  color: #991b1b;
+}
+
+/* Deadline is today: orange, so it stands out from "soon" */
+.deadline-today {
+  background: #ffedd5;
+  color: #9a3412;
+}
+
+/* Deadline in the next 7 days: yellow */
+.deadline-soon {
+  background: #fef9c3;
+  color: #854d0e;
+}
