@@ -3,13 +3,15 @@
 //   cell         the deadline cell (<td>)
 //   opportunity  the row's data, including days_left from the server
 //
-// It adds an "Urgency" cell right after the deadline cell.
-// The label only depends on days_left (team rule), not on the status.
+// It adds an "Urgency" cell and a "Result" cell right after the deadline cell.
+// The labels only depend on days_left (team rule), not on the status.
 function showDeadline(row, cell, opportunity) {
   const urgencyCell = document.createElement("td");
-  cell.after(urgencyCell);
+  const resultCell = document.createElement("td");
+  cell.after(urgencyCell, resultCell);
 
   const daysLeft = opportunity.days_left;
+  showResult(resultCell, daysLeft);
   let text = "";
   let colour = "";
 
@@ -35,16 +37,31 @@ function showDeadline(row, cell, opportunity) {
   urgencyCell.appendChild(label);
 }
 
-// Adds the "Urgency" column heading after the "Deadline" heading.
-function addUrgencyHeading() {
+// Fills the Result cell: "Fail" if the deadline has passed, "Pass" if not.
+function showResult(resultCell, daysLeft) {
+  const label = document.createElement("span");
+  if (daysLeft < 0) {
+    label.className = "deadline-label result-fail";
+    label.textContent = "Fail";
+  } else {
+    label.className = "deadline-label result-pass";
+    label.textContent = "Pass";
+  }
+  resultCell.appendChild(label);
+}
+
+// Adds the "Urgency" and "Result" column headings after the "Deadline" heading.
+function addHeadings() {
   const headings = document.querySelectorAll("thead th");
   for (const heading of headings) {
     if (heading.textContent === "Deadline") {
       const urgencyHeading = document.createElement("th");
       urgencyHeading.textContent = "Urgency";
-      heading.after(urgencyHeading);
+      const resultHeading = document.createElement("th");
+      resultHeading.textContent = "Result";
+      heading.after(urgencyHeading, resultHeading);
     }
   }
 }
 
-addUrgencyHeading();
+addHeadings();
